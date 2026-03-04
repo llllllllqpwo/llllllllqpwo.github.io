@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Bestdori 故事查看器</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .container {
+      display: inline-block;
+      padding: 25px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fafafa;
+    }
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid #999;
+    }
+    #numInput {
+      font-size: 18px;
+      width: 100px;
+      padding: 8px;
+      text-align: center;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #999;
+    }
+    #currentUrl {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #555;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>Bestdori 卡片故事查看器</h3>
+    <div id="currentUrl">https://bestdori.com/tool/storyviewer/card/cn/123/1/</div>
+
+    <input type="number" id="numInput" value="123">
+    <br>
+
+    <button id="openBtn">在新页面打开</button>
+    <br>
+    <button id="minusBtn">-1</button>
+    <button id="plusBtn">+1</button>
+  </div>
+
+  <script>
+    let cardId = 123;
+    const numInput = document.getElementById('numInput');
+    const currentUrl = document.getElementById('currentUrl');
+
+    function update() {
+      numInput.value = cardId;
+      currentUrl.textContent = `https://bestdori.com/tool/storyviewer/card/cn/${cardId}/1/`;
+    }
+
+    // 打开
+    function openUrl() {
+      cardId = parseInt(numInput.value) || 123;
+      update();
+      const url = `https://bestdori.com/tool/storyviewer/card/cn/${cardId}/1/`;
+      window.open(url, '_blank');
+    }
+
+    // 按钮
+    document.getElementById('openBtn').addEventListener('click', openUrl);
+    document.getElementById('minusBtn').addEventListener('click', () => {
+      cardId--;
+      update();
+    });
+    document.getElementById('plusBtn').addEventListener('click', () => {
+      cardId++;
+      update();
+    });
+
+    // 回车打开
+    numInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') openUrl();
+    });
+
+    update();
+  </script>
+</body>
+</html>
